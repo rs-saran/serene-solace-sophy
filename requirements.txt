@@ -1,0 +1,10 @@
+notebook
+ipykernel
+langchain
+langchain_groq
+langgraph
+faiss-cpu
+langchain_community
+langchain-ollama
+unstructured
+markdown
