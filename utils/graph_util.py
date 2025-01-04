@@ -10,6 +10,18 @@ def display_graph(graph):
         print(f"Error: {e}")
         pass
 
+def save_graph_as_png(graph, filename="graph.png"):
+    try:
+        # Generate the PNG image of the graph
+        png_data = graph.get_graph(xray=True).draw_mermaid_png()
+        
+        # Save the PNG to a file
+        with open(filename, "wb") as file:
+            file.write(png_data)
+        
+        print(f"Graph saved successfully as '{filename}'")
+    except Exception as e:
+        print(f"Error saving graph: {e}")
 
 def stream_op(graph, user_input):
     for output in graph.stream(user_input):  # to stream step by step output
