@@ -1,5 +1,7 @@
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-
+from langchain.prompts import ChatPromptTemplate
+from langchain.schema.runnable import RunnablePassthrough
+from langchain.schema.output_parser import StrOutputParser
 
 def get_char_prompt():
     intro_prompt = """
@@ -113,7 +115,7 @@ def chat(
     if user_input.lower() in ["exit", "quit", "stop", "q"]:
         print("Sophy: Goodbye. Take care.")
         print(end="\n\n\n\n\n")
-        print(exchanges_pretty(conversation_history))
+        # print(exchanges_pretty(conversation_history))
 
     if len(conversation_history) < 2 * exc_window:
         latest_exchanges = conversation_history
@@ -173,6 +175,61 @@ def chat(
     # print("\n\n===============================================")
 
     return exchange, conv_sum, conversation_history, latest_exchanges, user_input
+
+
+def company_qna_chat(
+    llm,
+    retriever,
+    conversation_history,
+    user_input,
+    exchange
+):
+    reset_exchange = -1
+
+    if user_input.lower() in ["exit", "quit", "stop", "q"]:
+        print("Goodbye. Take care.")
+        print(end="\n\n\n\n\n")
+        # print(exchanges_pretty(conversation_history))
+
+    
+    latest_exchanges = conversation_history[-6 :]
+    latest_exchanges_pretty = exchanges_pretty(latest_exchanges, True)
+
+    template = '''an assistant for question-answering tasks.
+                    Use only the context to answer the question.
+                    If you don't know the answer, just say that you don't know.
+                    Use ten sentences maximum and keep the answer concise.
+                    If Serene Solace is mentioned talk only about the company. Do not provide unnecessary reasoning.
+        
+                    Context: {context}
+
+                    latest conversation:
+                    {latest_exchanges_pretty}
+                    human:{user_query}
+                    assistant:'''
+    
+    prompt = ChatPromptTemplate.from_template(template)
+
+
+    output_parser=StrOutputParser()
+
+    rag_chain = (
+        {"context": retriever,  "latest_exchanges_pretty": lambda x: latest_exchanges_pretty ,"user_query": RunnablePassthrough()}
+        | prompt
+        | llm
+        | output_parser
+    )
+    exchange += 1
+
+
+    model_response = rag_chain.invoke(user_input)
+
+    conversation_history.append(HumanMessage(content=user_input))
+    conversation_history.append(AIMessage(content=model_response))
+    # Print the response
+    print(f"Sophy: {model_response}")
+
+    return exchange, conversation_history
 
 
 if __name__ == "__main__":
