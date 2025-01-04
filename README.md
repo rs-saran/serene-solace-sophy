@@ -42,11 +42,14 @@ Sophy is a mental health assistant chatbot designed to provide empathetic and ca
    git clone https://github.com/rs-saran/serene-solace-sophy.git
    ```
 2. Create python venv
-```bash
-py -m venv "sss-enc
-```
+   ```bash
+   py -m venv "sss-env"
+   ```
 
 3. Activate python venv
+   ```bash
+   sss-env\Scripts\activate
+   ```
 
 4. Install dependencies:
    ```bash
