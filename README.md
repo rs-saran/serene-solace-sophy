@@ -10,11 +10,8 @@ Sophy is a mental health assistant chatbot designed to provide empathetic and ca
 2. [Technologies Used](#technologies-used)
 3. [Installation](#installation)
 4. [Usage](#usage)
-5. [Repository Structure](#repository-structure)
-6. [How It Works](#how-it-works)
-7. [Future Improvements](#future-improvements)
-8. [Contributing](#contributing)
-9. [License](#license)
+5. [How It Works](#how-it-works)
+6. [Future Improvements](#future-improvements)
 
 ---
 
