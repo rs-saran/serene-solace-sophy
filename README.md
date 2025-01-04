@@ -42,15 +42,21 @@ Sophy is a mental health assistant chatbot designed to provide empathetic and ca
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo-name/sophy-chatbot.git
+   git clone https://github.com/rs-saran/serene-solace-sophy.git
    ```
+2. Create python venv
+```bash
+py -m venv "sss-enc
+```
 
-2. Install dependencies:
+3. Activate python venv
+
+4. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Install Ollama and pull llama3.2:1b model
+5. Install Ollama and pull llama3.2:1b model
 
 ---
 
